@@ -1,27 +1,39 @@
 package com.lucaslima.curso_modelagem.controller;
 
 import com.lucaslima.curso_modelagem.entity.Categoria;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.lucaslima.curso_modelagem.service.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 
+    @Autowired
+    private CategoriaService service;
+
     @GetMapping
-    public List<Categoria> listarCategorias()
+    public ResponseEntity<List<Categoria>> listarCategorias()
     {
-        Categoria c1 = new Categoria(1L, "Informática");
-        Categoria c2 = new Categoria(2L, "Escritório");
+       List<Categoria> categorias = service.buscarCategorias();
 
-        List<Categoria> listaCategorias = new ArrayList<>();
-        listaCategorias.add(c1);
-        listaCategorias.add(c2);
+        return ResponseEntity.ok().body(categorias);
+    }
 
-        return listaCategorias;
+    @GetMapping("/{id}")
+    public ResponseEntity<Categoria> buscar(@PathVariable Long id)
+    {
+        Optional<Categoria> categoria = service.buscarCategoria(id);
+        if(categoria.isPresent())
+        {
+            return  ResponseEntity.ok().body(categoria.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }
