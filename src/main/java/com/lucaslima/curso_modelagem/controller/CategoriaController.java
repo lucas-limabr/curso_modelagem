@@ -28,12 +28,8 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscar(@PathVariable Long id)
     {
-        Optional<Categoria> categoria = service.buscarCategoria(id);
-        if(categoria.isPresent())
-        {
-            return  ResponseEntity.ok().body(categoria.get());
-        }
+        Categoria categoria = service.buscarCategoria(id);
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(categoria);
     }
 }
