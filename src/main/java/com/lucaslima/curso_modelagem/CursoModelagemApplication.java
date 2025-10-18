@@ -1,13 +1,8 @@
 package com.lucaslima.curso_modelagem;
 
-import com.lucaslima.curso_modelagem.entity.Categoria;
-import com.lucaslima.curso_modelagem.entity.Cidade;
-import com.lucaslima.curso_modelagem.entity.Estado;
-import com.lucaslima.curso_modelagem.entity.Produto;
-import com.lucaslima.curso_modelagem.repository.CategoriaRepository;
-import com.lucaslima.curso_modelagem.repository.CidadeRepository;
-import com.lucaslima.curso_modelagem.repository.EstadoRepository;
-import com.lucaslima.curso_modelagem.repository.ProdutoRepository;
+import com.lucaslima.curso_modelagem.entity.*;
+import com.lucaslima.curso_modelagem.enums.TipoCliente;
+import com.lucaslima.curso_modelagem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +24,12 @@ public class CursoModelagemApplication implements CommandLineRunner {
 
     @Autowired
     private EstadoRepository estadoRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public static void main(String[] args) {
 		SpringApplication.run(CursoModelagemApplication.class, args);
@@ -68,5 +69,19 @@ public class CursoModelagemApplication implements CommandLineRunner {
         estadoRepository.save(est2);
 
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+
+        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "12345", TipoCliente.PESSOA_FISICA);
+
+        Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cid1, cli1);
+
+        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cid2, cli1);
+
+        cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+        cli1.getTelefones().addAll(Arrays.asList("2567891", "2567433"));
+
+        clienteRepository.save(cli1);
+        enderecoRepository.save(e1);
+        enderecoRepository.save(e2);
     }
 }
