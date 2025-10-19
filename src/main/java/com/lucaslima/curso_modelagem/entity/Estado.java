@@ -1,5 +1,6 @@
 package com.lucaslima.curso_modelagem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ public class Estado {
 
     private String nome;
     @OneToMany(mappedBy = "estado")
+    @JsonBackReference
     private List<Cidade> cidades = new ArrayList<>();
 
 }

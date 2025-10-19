@@ -1,5 +1,6 @@
 package com.lucaslima.curso_modelagem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,6 @@ public class Cidade {
     private String nome;
     @ManyToOne()
     @JoinColumn(name = "estado_id")
+    @JsonManagedReference
     private Estado estado;
 }

@@ -1,5 +1,6 @@
 package com.lucaslima.curso_modelagem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Endereco {
     private Cidade cidade;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 }

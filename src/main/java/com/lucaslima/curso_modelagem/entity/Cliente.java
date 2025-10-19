@@ -1,5 +1,6 @@
 package com.lucaslima.curso_modelagem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lucaslima.curso_modelagem.enums.TipoCliente;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,6 +47,7 @@ public class Cliente {
 
     @Getter
     @Setter
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
