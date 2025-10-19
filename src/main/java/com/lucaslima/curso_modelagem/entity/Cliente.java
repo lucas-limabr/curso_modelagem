@@ -51,6 +51,10 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
+    private List<Pedido> pedidos = new ArrayList<>();
+
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente.getCodigo();
     }
