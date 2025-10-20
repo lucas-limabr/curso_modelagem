@@ -1,6 +1,9 @@
 package com.lucaslima.curso_modelagem;
 
 import com.lucaslima.curso_modelagem.entity.*;
+import com.lucaslima.curso_modelagem.entity.Pagamento;
+import com.lucaslima.curso_modelagem.entity.Pedido;
+import com.lucaslima.curso_modelagem.enums.EstadoPagamento;
 import com.lucaslima.curso_modelagem.enums.TipoCliente;
 import com.lucaslima.curso_modelagem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -30,6 +34,12 @@ public class CursoModelagemApplication implements CommandLineRunner {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
     public static void main(String[] args) {
 		SpringApplication.run(CursoModelagemApplication.class, args);
@@ -83,5 +93,23 @@ public class CursoModelagemApplication implements CommandLineRunner {
         clienteRepository.save(cli1);
         enderecoRepository.save(e1);
         enderecoRepository.save(e2);
+
+
+        LocalDateTime dataEHora = LocalDateTime.of(2017, 9, 30, 10, 32, 0);
+        Pedido ped1 = new Pedido(null, dataEHora, cli1, e1);
+
+        Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+        ped1.setPagamento(pagto1);
+
+        dataEHora = LocalDateTime.of(2017, 10, 10, 0, 0, 0);
+        Pedido ped2 = new Pedido(null, dataEHora, cli1, e2);
+
+        LocalDateTime dataEHoraVencimento = LocalDateTime.of(2017, 10, 10, 0, 0, 0);
+
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, dataEHoraVencimento, null);
+        ped2.setPagamento(pagto2);
+
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
     }
 }

@@ -12,9 +12,10 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento {
 
-    public Pagamento(Long id, EstadoPagamento estadoPagamento) {
+    public Pagamento(Long id, EstadoPagamento estadoPagamento, Pedido pedido) {
         this.id = id;
         this.estadoPagamento = estadoPagamento.getCodigo();
+        this.pedido = pedido;
     }
 
     @Id

@@ -1,21 +1,24 @@
 package com.lucaslima.curso_modelagem.entity;
 
+import com.lucaslima.curso_modelagem.enums.EstadoPagamento;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString(callSuper = true)
 @Entity
 public class PagamentoComBoleto extends Pagamento {
 
-   private Date dataVencimento;
-   private Date dataPagamento;
+    public PagamentoComBoleto(Long id, EstadoPagamento estadoPagamento, Pedido pedido, LocalDateTime dataVencimento, LocalDateTime dataPagamento) {
+        super(id, estadoPagamento, pedido);
+        this.dataVencimento = dataVencimento;
+        this.dataPagamento = dataPagamento;
+    }
+
+    private LocalDateTime dataVencimento;
+   private LocalDateTime dataPagamento;
 }

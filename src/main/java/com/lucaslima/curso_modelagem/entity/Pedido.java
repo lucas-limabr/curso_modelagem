@@ -7,18 +7,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Pedido {
+
+    public Pedido(Long id, LocalDateTime data, Cliente cliente, Endereco enderecoEntrega) {
+        this.id = id;
+        this.data = data;
+        this.cliente = cliente;
+        this.enderecoEntrega = enderecoEntrega;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date data;
+    private LocalDateTime data;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonBackReference
