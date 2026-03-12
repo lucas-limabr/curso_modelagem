@@ -26,7 +26,11 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+
+    //Anotação do JPA/Hibernate: sgnifica que esse lado não é o dono da relação no BD
     @ManyToMany(mappedBy = "categorias")
+
+    //Anotação do Jackson: significa que apenas este lado (Categoria) vai trazer um array de objetos da lista do outro lado (Produto) no JSON
     @JsonManagedReference
     private List<Produto> produtos = new ArrayList<>();
 }

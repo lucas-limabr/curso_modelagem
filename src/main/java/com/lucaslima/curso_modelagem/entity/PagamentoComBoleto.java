@@ -20,5 +20,5 @@ public class PagamentoComBoleto extends Pagamento {
     }
 
     private LocalDateTime dataVencimento;
-   private LocalDateTime dataPagamento;
+    private LocalDateTime dataPagamento;
 }

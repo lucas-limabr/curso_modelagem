@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento {
 
     public Pagamento(Long id, EstadoPagamento estadoPagamento, Pedido pedido) {
@@ -25,9 +25,13 @@ public abstract class Pagamento {
 
     private Integer estadoPagamento;
 
+    //Se utilizar uma relação forte com a anotação @MapsId utilzie também uma relação bidirecional com o cascade type.all na classe que controla a outra
+
     @OneToOne()
     @JoinColumn(name = "pedido_id")
+    //No JSON de um objeto Pagamento não traz o Pedido relacionado
     @JsonBackReference
+    //Para dizer que o ID de pedido além de ser FK também é PK, ou seja, é uma relação forte, onde um pagamento não existe sem um pedido relacionado
     @MapsId
     private Pedido pedido;
 
